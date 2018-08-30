@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link href="data:text/css;charset=utf-8,body%20%7B%0Afont%2Dfamily%3A%20sans%2Dserif%3B%0Afont%2Dsize%3A%2012pt%3B%0A%7D%0Atable%20th%20%7B%0Abackground%2Dcolor%3A%20%23c0c0c0%3B%0Acolor%3A%20inherit%3B%0Amargin%3A%202px%3B%0Apadding%3A%202px%3B%0A%7D%0Atable%20td%20%7B%0Amargin%3A%202px%3B%0Apadding%3A%202px%208px%3B%0A%7D%0Atable%20tr%2Eodd%20%7B%0Abackground%2Dcolor%3A%20%23e0f0ff%3B%0A%7D%0Atable%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23c0e0f0%3B%0A%7D%0A" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1 id="graphics-file-formats">Graphics file formats</h1>
+<p>This file contains descriptions of various C64 graphics file formats which hold multicolor bitmap images.</p>
+<h2 id="standard-multicolor-bitmap">Standard multicolor bitmap</h2>
+<p>These file formats store the full information on multicolor images: a bitmap, videoram, coloram and a background color.</p>
+<h3 id="koala-painter-2">Koala Painter 2</h3>
+<p>Multi color bitmap image with videoram, coloram and background color, the de-facto standard on C64 for bitmap images. This is also the way BDP6 images are stored in memory during editing.</p>
+<p>Load: $6000-$8710, Size: $2711</p>
+<table>
+<thead>
+<tr class="header">
+<th>address</th>
+<th>offset</th>
+<th>size</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>$6000-$7f3f</code></td>
+<td><code>$0000</code></td>
+<td><code>$1f40</code></td>
+<td>bitmap</td>
+</tr>
+<tr class="even">
+<td><code>$7f40-$8327</code></td>
+<td><code>$1f40</code></td>
+<td><code>$03e8</code></td>
+<td>videoram</td>
+</tr>
+<tr class="odd">
+<td><code>$8328-$870f</code></td>
+<td><code>$2328</code></td>
+<td><code>$03e8</code></td>
+<td>colorram</td>
+</tr>
+<tr class="even">
+<td><code>$8710</code></td>
+<td><code>$2710</code></td>
+<td><code>$0001</code></td>
+<td>background color</td>
+</tr>
+</tbody>
+</table>
+<h2 id="non-standard-file-formats">Non-standard file formats</h2>
+<p>These format miss some information such as colorram data.</p>
+<h3 id="paint-magic">Paint Magic</h3>
+<p>Multi color bitmap image with a <em>single byte</em> for the colorram.</p>
+<p>Load: $3f8e-$63ff, Size: $2872</p>
+<table>
+<thead>
+<tr class="header">
+<th>address</th>
+<th>offset</th>
+<th>size</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>$3f8e-$3fff</code></td>
+<td><code>$0000</code></td>
+<td><code>$0072</code></td>
+<td>display routine</td>
+</tr>
+<tr class="even">
+<td><code>$4000-$5f3f</code></td>
+<td><code>$0072</code></td>
+<td><code>$1f40</code></td>
+<td>bitmap</td>
+</tr>
+<tr class="odd">
+<td><code>$5f40</code></td>
+<td><code>$1fb2</code></td>
+<td><code>$0001</code></td>
+<td>background color</td>
+</tr>
+<tr class="even">
+<td><code>$5f43</code></td>
+<td><code>$1fb5</code></td>
+<td><code>$0001</code></td>
+<td>colorram value</td>
+</tr>
+<tr class="odd">
+<td><code>$5f44</code></td>
+<td><code>$1fb6</code></td>
+<td><code>$0001</code></td>
+<td>border color</td>
+</tr>
+<tr class="even">
+<td><code>$6000-$63e7</code></td>
+<td><code>$2072</code></td>
+<td><code>$03e8</code></td>
+<td>videoram</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

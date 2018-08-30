@@ -1,0 +1,127 @@
+2017-07-23  Compyx  <b.wassink@ziggo.nl>
+
+	* edit.s: fix bugs in copy routines
+
+
+
+2017-07-11  Compyx  <b.wassink@ziggo.nl>
+
+	* edit.s: implement copying area, char-based. so far only a naieve
+	approach assuming no overlap, needs four different copy routines to work
+	properly
+
+
+
+2017-07-09  Compyx  <b.wassink@ziggo.nl>
+
+	* edit.s: add clearing a marked area (chars), removed old coordinate
+	swapping code, added scope `coords` and get_coords_box() to properly handle
+	calculating box dimensions for copy/cut/paste
+	* events.s: add handling of EV_UPDATE_FULL_ZOOM and EV_UPDATE_FULL_VIEW
+
+
+
+2017-07-04  Compyx  <b.wassink@ziggo.nl>
+
+	* edit.s: add proper coordinate swapping for marks, keeping A in the
+	top-left corner and B in the bottom-right corner
+
+
+
+2017-07-02  Compyx  <b.wassink@ziggo.nl>
+
+	* data.s: add markA and markB data, for copying/moving/filling/deleting
+	* status.s: add update_marks(): write current marks' data into the lower border sprites
+	* events.s: add keys 'A' & 'B' to set mark A/B
+
+
+
+2017-06-18  Compyx  <b.wassink@ziggo.nl>
+
+	* edit.s: fix bug in updating zoom/view char after clearing a single char
+
+
+
+2017-06-11  Compyx  <b.wassink@ziggo.nl>
+
+	* Makefile: add rules to generate disk image with bdp6 test images
+
+	* data/images/hawkeye.bdp6: add file
+
+	* formats.s: add bdp6_load(): load and unpack BDP6 file, add bdp6_save(): pack and save a BDP6 file
+
+	* diskio.s: fix bug with invalid start address in save_file()
+
+
+
+2017-05-29  Compyx  <b.wassink@ziggo.nl>
+
+	* rle.s: add pack_generic()
+
+
+
+2017-05-24  Compyx  <b.wassink@ziggo.nl>
+
+	* dialogs.s: add bitpair color/lock manipulation dialog
+
+
+
+2017-05-22  Compyx  <b.wassink@ziggo.nl>
+
+	* formats.s: add Amica Paint loader, add unpacking message handlers
+
+	* dialogs.s: add render_text_set_position() to allow reuse of the
+	render_text() function
+
+	* update font: add RETURN, STOP, INS, DEL and HOME glyphs, RETURN being
+	three chars wide unfortunately
+
+	* doc/file-formats.md: add file
+
+	* Makefile: add rules to generate html files from markdown files in ./doc
+
+
+
+2017-05-20  Compyx  <b.wassink@ziggo.nl>
+
+	* main.s: update some IRQ code
+
+	* events.s: add proper handlers for moving the cursor a full char (eight
+	pixels up/down, four pixels left/right)
+
+	* zoom.s: update show_buffer()
+
+	* rle.s: add file, implement generic RLE-decoder
+
+	* data/disks/focusgfx.d64: add disk image with lots of AP files
+
+
+(forgot to update this file from 2017-05-06 until 2017-05-19)
+
+
+
+2017-05-05  Compyx  <b.wassink@ziggo.nl>
+
+	* dialogs.s: file added
+
+	* updated font
+
+	* dialogs.s: add render_frame(), add render_title()
+
+
+
+2017-05-03  Compyx  <b.wassink@ziggo.nl>
+
+	* Changelog: file added
+
+	* event.s: remove bugs from view scrolling, add buffer switching via 'F5'.
+	add 'G' to change grid color and background color of status line
+
+	* status.s: update status display line: add buffer number. add different
+	grid and status line background colors
+
+	* main.s: add switching off grid sprites and pixel sprite to support
+	dialogs: data.dialogs_active (byte)
+
+	* various files: add lower border sprites for 24x2 char display
+
