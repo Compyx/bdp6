@@ -605,11 +605,19 @@ _lfb_event_loop
         beq _lfb_event_loop
 
         cmp #$03        ; STOP
-        bne _lfb_check_up
+        bne _lfb_format
 
         jsr render_aborted_message
         sec     ; cancel
         rts
+
+_lfb_format
+        cmp #$46
+        bne _lfb_check_up
+        ; change file format
+
+        jmp _lfb_event_loop
+
 _lfb_check_up
         cmp #$91        ; CRSR UP
         bne _lfb_check_down

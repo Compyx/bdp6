@@ -278,7 +278,7 @@ cursor_right .proc
         cmp #30
         bcs +
         jsr zoom.move_right
-        lda #35
+        lda #36
         sta data.cursor_xpos
 +       rts
 .pend

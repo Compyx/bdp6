@@ -569,7 +569,7 @@ set_view_sprites
         lda $d010
         and #%11100001
         ldx data.zoom_xpos
-        cpx #30
+        cpx #29
         bcc +
         ora #%00001010
 +       cpx #20

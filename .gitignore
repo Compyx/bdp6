@@ -1,5 +1,7 @@
 *swp
 *~
+*.koa
+*.gpx
 .exrc
 bdp6.prg
 labels.txt
