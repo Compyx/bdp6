@@ -1216,7 +1216,7 @@ rd_done
 left_and_down
 
         ldy rows
-        dey
+        ;dey
         ; bitmap
         lda bmpsrc
         clc
@@ -1269,8 +1269,7 @@ left_and_down
 
 
 ld_next_row
-        ldx columns
-        dex
+        ldx #0
 
         lda bmpsrc
         clc
@@ -1306,8 +1305,9 @@ ld_next_col
         #word_add_val tmpsrc, 8
         #word_add_val tmpdst, 8
 
-        dex
-        bpl ld_next_col
+        inx
+        cpx columns
+        bne ld_next_col
 
         #word_sub_val bmpsrc, $140
         #word_sub_val bmpdst, $140
@@ -1317,7 +1317,7 @@ ld_next_col
         #word_sub_val coldst, 40
 
         dec rows
-        beq ld_done
+        bmi ld_done
         jmp ld_next_row
 ld_done
         rts
