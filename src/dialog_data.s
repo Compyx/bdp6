@@ -50,20 +50,36 @@ help_dialog
         .text $ff, "Important keys:", $80, $80
 
         .text $f7, "STOP", $ff, "  cancel/exit dialog/exit screen", $80, $80
+
         .text $f7, "F1", $ff, "  display help (this screen)", $80
+
         .text $f7, "F3", $ff, "  switch zoom mode (full/preview)", $80
+
         .text $f7, "F5", $ff, "  switch image buffer", $80
+
         .text $f7, "F7", $ff, "  enter disk menu", $80, $80
+
+
         .text $f7, "Return", $ff, "  show current buffer", $80
+
         .text $f7, "Space ", $ff, "  plot pixel", $80
+
         .text $f7, "Cursor", $ff, "  move pixel cursor", $80
-        .text $f7, "a", $ff, "-", $f7, "p", $ff, "     select color", $80
-        .text $f7, dialogs.F_SHIFT, dialogs.F_SHIFT + 1, $ff, "+", $f7, "g"
+
+        .text $f7, "A", $ff, "-", $f7, "P", $ff, "     select color", $80
+
+        .text $f7, dialogs.F_SHIFT, dialogs.F_SHIFT + 1, $ff, "+", $f7, "G"
         .text $ff, "    change grid color", $80
+
+        .text $f7, dialogs.F_SHIFT, dialogs.F_SHIFT + 1, $ff, "+"
         .text $f7, "A", $ff, "/", $f7, "B", $ff, "  "
         .text "set mark ", $f1, "A", $ff, "/", $f1, "B", $80
-        .text $f7, "C", $ff, "         clear marked area (chars)", $80
-        .text $f7, "V", $ff, "         copy marked area (chars)"
+
+        .text $f7, dialogs.F_SHIFT, dialogs.F_SHIFT + 1, $ff, "+"
+        .text $f7, "C", $ff, "    clear marked area (chars)", $80
+
+        .text $f7, dialogs.F_SHIFT, dialogs.F_SHIFT + 1, $ff, "+"
+        .text $f7, "V", $ff, "    copy marked area (chars)"
         .byte 0
         .enc "none"
 
