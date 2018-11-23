@@ -765,7 +765,7 @@ irq1
         adc #$17
         sta $d000
         lda data.cursor_xpos
-        cmp #29
+        cmp #30
         bcc +
         lda $d010
         ora #1
