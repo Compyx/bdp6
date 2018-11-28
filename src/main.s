@@ -79,7 +79,7 @@
         LBORDER_SPRITES         = $e000
 
         ; Top raster line, this where the first IRQ should trigger
-        RASTER_TOP              = $20
+        RASTER_TOP              = $1f
 
 
         ; LOAD ADDRESS
@@ -150,14 +150,13 @@ irq_view_pre
         bpl -
         .endp
 irqview_bgcolor
-        lda #15
+        lda #3
         sta $d020
         sta $d021
 
-        lda $d010
-        and #%0000001
-        ora #%1000000
-        sta $d010
+        ;lda $d010
+        ;and #%0000001
+        ;sta $d010
         ; goto first view-IRQ setting grid sprites
         #do_irq_macro $70, irq_view
 
@@ -257,9 +256,13 @@ irq_view_row6
         ; last 2 pixels of grid
         #set_grid_sprites_ptrs 8
 
-        lda #$33
+        lda #$53
         sta $d011
         dec $d020
+        lda #6
+        sta $d021
+        lda #0
+        sta $f9ff
 
         ldx #(LBORDER_SPRITES & $3fff) / 64
         stx $fbf8
@@ -325,7 +328,7 @@ irq_view_row6
 -       dex
         bpl -
         inc $d020
-        lda #$3b
+        lda #$5b
         sta $d011
         inc $d020
 
@@ -507,6 +510,11 @@ irq_full_row9
         lda #$ff
         sta $d015
 
+        lda #0
+        sta $7fff
+        lda #6
+        sta $d021
+
         dec $d020
         jsr flash_cursor
 
@@ -553,6 +561,8 @@ irq_dialogs_lborder
 
 ; Setup sprites for the view
 set_view_sprites
+        lda #5
+        sta $d020
         lda data.zoom_xpos
         asl a
         asl a
@@ -567,11 +577,11 @@ set_view_sprites
         sta $d008
 
         lda $d010
-        and #%11100001
+        and #%00000001
         ldx data.zoom_xpos
-        cpx #29
+        cpx #30
         bcc +
-        ora #%00001010
+        ora #%00011110
 +       cpx #20
         bcc +
         ora #%00010100
@@ -602,6 +612,8 @@ set_view_sprites
         sta $d029
         sta $d02a
         sta $d02b
+        lda #0
+        sta $d020
         rts
 
 
@@ -741,8 +753,10 @@ main_init
 ; IRQ just above the first screen row - setup view/zoom sprites
 ;------------------------------------------------------------------------------
 irq1
-        lda #0
-        sta $d020
+        lda #$3b
+        sta $d011
+        lda #6
+        sta $d021
         dec $d020
         lda $d010
         and #$fe
@@ -829,6 +843,8 @@ _zoom_mode_full
         sta $d02c
         sta $d02d
         sta $d02e
+        lda #$06
+        sta $d021
 
         jsr set_grid_pointers_row0
         jsr set_grid_sprites_xpos
