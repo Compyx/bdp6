@@ -445,8 +445,10 @@ irq_full_row9
         ldx #$03
 -       dex
         bpl -
-        lda #$33
+        lda #$53
         sta $d011
+        lda data.grid_color
+        sta $d021
         dec $d020
         ldx #(LBORDER_SPRITES & $3fff) / 64
         stx $fbf8
@@ -509,7 +511,7 @@ irq_full_row9
         ldx #$20
 -       dex
         bpl -
-        lda #$1b
+        lda #$5b
         sta $d011
         inc $d020
 
@@ -518,18 +520,19 @@ irq_full_row9
 
         lda #0
         sta $7fff
-        lda #6
-        sta $d021
 
         dec $d020
         jsr flash_cursor
 
         inc $d020
 
-        lda #RASTER_TOP
-        ldx #<irq1
-        ldy #>irq1
+        lda #0
+        ldx #<irq0
+        ldy #>irq0
         sta $d012
+        lda $d011
+        and #$7f
+        sta $d011
         stx $0314
         sty $0315
         inc $d019
@@ -761,6 +764,7 @@ main_init
 
 irq0
         lda #0
+        sta $d020
         sta $7fff
         lda #$02
         sta $dd00
@@ -809,7 +813,6 @@ cursor_color
         lda #1
         sta $d027
 
-
         lda #$02
         sta $dd00
         lda #$78
@@ -845,7 +848,7 @@ _zoom_mode_full
         sta $d015
         #do_irq_macro $f9, irq_dialogs_lborder
 +
-        lda #$3b
+        lda #$1b
         sta $d011
         lda #$3a
         sta $d003
@@ -863,8 +866,6 @@ _zoom_mode_full
         sta $d02c
         sta $d02d
         sta $d02e
-        lda #$06
-        sta $d021
 
         jsr set_grid_pointers_row0
         jsr set_grid_sprites_xpos
@@ -875,9 +876,9 @@ _zoom_mode_full
         sta $d01d
 
         ; second row of sprites starts at $3a + 21
-        lda #$3a + 21 -2
-        ldx #<irq_full_row1
-        ldy #>irq_full_row1
+        lda #$32
+        ldx #<zoom_irq_top
+        ldy #>zoom_irq_top
 
 ; save some bytes:
 do_irq  sta $d012
@@ -885,6 +886,21 @@ do_irq  sta $d012
         sty $0315
         inc $d019
         jmp $ea81
+
+        ; raster at beginning of display
+zoom_irq_top
+        ; avoid jitter
+        ldx #3
+-       dex
+        bpl -
+        lda #$3b
+        sta $d011
+
+        ; second row of sprites starts at $3a + 21
+        lda #$3a + 21 -2
+        ldx #<irq_full_row1
+        ldy #>irq_full_row1
+        jmp do_irq
 
 
 #do_irq_macro $00, $00

@@ -88,6 +88,9 @@ show_buffer .proc
         sta $d016
         lda #$78
         sta $d018
+        lda #0
+        sta $d020
+        sta $d021
         cli
 
         ; copy current buffer to workspace
