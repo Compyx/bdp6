@@ -79,7 +79,7 @@
         LBORDER_SPRITES         = $e000
 
         ; Top raster line, this where the first IRQ should trigger
-        RASTER_TOP              = $1f
+        RASTER_TOP              = $1e
 
 
         ; LOAD ADDRESS
@@ -149,11 +149,14 @@ irq_view_pre
 -       dex
         bpl -
         .endp
+        lda #$3b
+        sta $d011
+
+
 irqview_bgcolor
         lda #3
         sta $d020
         sta $d021
-
         ;lda $d010
         ;and #%0000001
         ;sta $d010
@@ -256,13 +259,13 @@ irq_view_row6
         ; last 2 pixels of grid
         #set_grid_sprites_ptrs 8
 
-        lda #$53
+        lda #$53        ; trick so the IDLE byte it at $f9ff
         sta $d011
         dec $d020
-        lda #6
+        lda data.grid_color
         sta $d021
         lda #0
-        sta $f9ff
+        sta $f9ff       ; IDL byte
 
         ldx #(LBORDER_SPRITES & $3fff) / 64
         stx $fbf8
@@ -332,10 +335,13 @@ irq_view_row6
         sta $d011
         inc $d020
 
-        lda #RASTER_TOP
-        ldx #<irq1
-        ldy #>irq1
+        lda #0
+        ldx #<irq0
+        ldy #>irq0
         sta $d012
+        lda $d011
+        and #$7f
+        sta $d011
         stx $0314
         sty $0315
         inc $d019
@@ -503,7 +509,7 @@ irq_full_row9
         ldx #$20
 -       dex
         bpl -
-        lda #$3b
+        lda #$1b
         sta $d011
         inc $d020
 
@@ -752,11 +758,23 @@ main_init
 ;------------------------------------------------------------------------------
 ; IRQ just above the first screen row - setup view/zoom sprites
 ;------------------------------------------------------------------------------
-irq1
-        lda #$3b
+
+irq0
+        lda #0
+        sta $7fff
+        lda #$02
+        sta $dd00
+        lda #$1b
         sta $d011
-        lda #6
-        sta $d021
+        lda #$78
+        sta $d018
+
+        lda #<RASTER_TOP
+        ldx #<irq1
+        ldy #>irq1
+        jmp do_irq
+
+irq1
         dec $d020
         lda $d010
         and #$fe
@@ -827,6 +845,8 @@ _zoom_mode_full
         sta $d015
         #do_irq_macro $f9, irq_dialogs_lborder
 +
+        lda #$3b
+        sta $d011
         lda #$3a
         sta $d003
         sta $d005
