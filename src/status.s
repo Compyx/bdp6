@@ -283,9 +283,10 @@ render_lborder_char .proc
         atmp = ZP_TMP
         xtmp = ZP_TMP + 1
         ytmp = ZP_TMP + 2
-
         tmp = ZP_TMP + 3
-        char = TEMP_SPACE
+        ; XXX:  'char' shadows a function in recent 64tass
+        ;       may have to come up with a slightly better label
+        char_ = TEMP_SPACE
 
         sta atmp
         stx xtmp
@@ -297,7 +298,7 @@ render_lborder_char .proc
         sty tmp + 1
         ldy #7
 -       lda (tmp),y
-        sta char,y
+        sta char_,y
         dey
         bpl -
 
@@ -312,7 +313,7 @@ render_lborder_char .proc
 
         ldy ytmp
         ldx #1          ; chars are only 6 pixels high
--       lda char,x
+-       lda char_,x
         sta (tmp),y
         iny
         iny

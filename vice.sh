@@ -1,6 +1,6 @@
 #/bin/sh
 
-VICE=x64sc
+VICE=x64sc-gtk3
 PROGRAM=bdp6.prg
 # test images
 IMAGE9=data/disks/amica_paint_1_8.d64

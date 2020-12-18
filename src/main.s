@@ -1,4 +1,4 @@
-; vim: set et ts=8 sts=8 sw=8 fdm=marker syntax=64tass:
+; vim: set smartindent et ts=8 sts=8 sw=8 fdm=marker syntax=64tass:
 ;
 ; BDP 6 - main
 ;
@@ -77,6 +77,9 @@
 
         ; Lower border sprites (8), for extra status text/help
         LBORDER_SPRITES         = $e000
+        ; Upper border sprites (8), for extra status text
+        ; Prefered use would be showing the bytes of the current char
+        UBORDER_SPRITES         = $e200
 
         ; Top raster line, this where the first IRQ should trigger
         RASTER_TOP              = $1e
@@ -85,9 +88,9 @@
         ; LOAD ADDRESS
         * = $0801
 
-        ; BASIC SYS line: "2017 sys${main_init}"
+        ; BASIC SYS line: "2020 sys${main_init}"
         .word (+)
-        .word 2017
+        .word 2020
         .null $9e, format("%d", main_init)
 +       .word 0
 
@@ -984,7 +987,7 @@ set_grid_sprites_xpos .proc
 
  
 
-
+.if false
 ; Test images
 
 
@@ -1015,4 +1018,4 @@ TEST_IMAGE1 = "hawkeye"
 
         * = BUFFER2_BITMAP
 .binary "../data/images/legion2.koa", 2
-
+.endif

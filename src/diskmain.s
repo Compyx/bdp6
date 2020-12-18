@@ -474,6 +474,7 @@ get_file_type .proc
 
 ; Disk menu entry point
 exec .proc
+        sei
         ldx #$ff
         txs
         lda #$36
@@ -490,7 +491,7 @@ exec .proc
         jsr render_menu_text
         jsr render_device_number
         jsr render_file_type
-
+        cli
         jmp diskevents.event_loop
 .pend
 

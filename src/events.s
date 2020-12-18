@@ -85,6 +85,7 @@ keys
         ; V - paste marked area into current position
         .word $d6 | EV_UPDATE_FULL_ZOOM | EV_UPDATE_FULL_VIEW, edit.paste_area
 
+        ; CTRL+2 - switch bitpair 01 lock
 
 keys_end
 

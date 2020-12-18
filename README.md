@@ -5,4 +5,4 @@ Another attempt at creating a decent multicolor bitmap editor on the C64. Haven'
 
 ## building
 
-Building requires GNU Make and 64tass.
+Building requires GNU Make and 64tass (2262 is the version I used last)

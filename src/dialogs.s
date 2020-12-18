@@ -113,7 +113,11 @@ init .proc
 ; @param X      table LSB
 ; @param Y      table MSB
 ;
-handle_events
+; XXX: Unused now, check if I need this
+;
+handle_events .proc
+        rts
+.pend
 
 
 
@@ -130,7 +134,9 @@ render_frame .proc
         edge_h = ZP + 8
         edge_v = ZP + 10
 
-        char = ZP + 12
+        ; XXX:  'char' shadows a function in recent 64tass
+        ;       may have to come up with a slightly better label
+        char_ = ZP + 12
         xpos = ZP + 14
         ypos = ZP + 15
         color = ZP + 16
@@ -155,10 +161,10 @@ render_frame .proc
         ; top-left corner
         lda #F_CORNER_TL
         jsr base.get_font_ptr
-        stx char
-        sty char + 1
+        stx char_ + 0
+        sty char_ + 1
         ldy #7
--       lda (char),y
+-       lda (char_),y
         sta (bitmap_tmp),y
         dey
         bpl -
@@ -196,10 +202,10 @@ render_frame .proc
         ; render top-right corner
         lda #F_CORNER_TR
         jsr base.get_font_ptr
-        stx char
-        sty char + 1
+        stx char_ + 0
+        sty char_ + 1
         ldy #7
--       lda (char),y
+-       lda (char_),y
         sta (bitmap_tmp),y
         dey
         bpl -
@@ -276,14 +282,14 @@ _clear_more
         ; bottom right corner
         lda #F_CORNER_BL
         jsr base.get_font_ptr
-        stx char
-        sty char + 1
+        stx char_ + 0
+        sty char_ + 1
 
         ldx #0
         stx xpos
 
         ldy #7
--       lda (char),y
+-       lda (char_),y
         sta (bitmap),y  ; no need to copy `bitmap` to `bitmap_tmp`, last line
         dey
         bpl -
@@ -316,10 +322,10 @@ _clear_more
         ; render bottom right corner
         lda #F_CORNER_BR
         jsr base.get_font_ptr
-        stx char
-        sty char + 1
+        stx char_ + 0
+        sty char_ + 1
         ldy #7
--       lda (char),y
+-       lda (char_),y
         sta (bitmap),y
         dey
         bpl -
@@ -344,7 +350,9 @@ render_title .proc
 
         bitmap = ZP + 2
         vidram = ZP + 4
-        char = ZP + 6
+        ; XXX:  'char' shadows a function in recent 64tass
+        ;       may have to come up with a slightly better label
+        char_ = ZP + 6
         text = ZP + 8
         xpos = ZP + 10
         color = ZP + 11
@@ -376,10 +384,10 @@ render_title .proc
 
         lda #F_TITLE_LEFT
         jsr base.get_font_ptr
-        stx char
-        sty char + 1
+        stx char_ + 0
+        sty char_ + 1
         ldy #7
--       lda (char),y
+-       lda (char_),y
         sta (bitmap),y
         dey
         bpl -
@@ -395,10 +403,10 @@ render_title .proc
         beq _rt_end     ; done rendering text
 
         jsr base.get_font_ptr
-        stx char
-        sty char + 1
+        stx char_ + 0
+        sty char_ + 1
         ldy #7
--       lda (char),y
+-       lda (char_),y
         sta (bitmap),y
         dey
         bpl -
@@ -414,10 +422,10 @@ render_title .proc
 _rt_end
         lda #F_TITLE_RIGHT
         jsr base.get_font_ptr
-        stx char
-        sty char + 1
+        stx char_ + 0
+        sty char_ + 1
         ldy #7
--       lda (char),y
+-       lda (char_),y
         sta (bitmap),y
         dey
         bpl -
@@ -436,26 +444,28 @@ render_char .proc
         bitmap = ZP_TMP
         vidram = ZP_TMP + 2
         font = ZP_TMP + 4
-        char = ZP_TMP + 5
+        ; XXX:  'char' shadows a function in recent 64tass
+        ;       may have to come up with a slightly better label
+        char_ = ZP_TMP + 5
         xtmp = ZP_TMP + 6
         ytmp = ZP_TMP + 7
 
 .cerror ytmp >= ZP, format("temp ZP $%02x overlaps ZP at $%02x", ytmp, ZP)
 
-        sta char
+        sta char_
 
         cmp #$f0
         bcc +
         and #$0f
         sta data.dlg_fg_color
-        lda char
+        lda char_
         rts
 +
         cmp #$b0
         bcc +
         and #$0f
         sta data.dlg_bg_color
-        lda char
+        lda char_
         rts
 +
 
@@ -484,7 +494,7 @@ render_char .proc
         jsr get_dialog_color
         sta (vidram),y
 
-        lda char
+        lda char_
         jsr base.get_font_ptr
         stx font
         sty font + 1
@@ -495,7 +505,7 @@ render_char .proc
         dey
         bpl -
 
-        lda char
+        lda char_
         rts
 .pend
 
