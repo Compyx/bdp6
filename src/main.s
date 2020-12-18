@@ -644,6 +644,7 @@ diskmenu .binclude "diskmain.s"
 edit    .binclude "edit.s"
 events  .binclude "events.s"
 formats .binclude "formats.s"
+kernal  .binclude "kernal.s"
 rle     .binclude "rle.s"
 status  .binclude "status.s"
 zoom    .binclude "zoom.s"
@@ -671,7 +672,7 @@ main_init
         lda #$37
         sta $01
         cld
-        jsr K_RESTOR
+        jsr kernal.k_restor_fixed
         jsr K_IOINIT
         jsr K_SCINIT
         ; ^ one of those resets $01
@@ -985,11 +986,11 @@ set_grid_sprites_xpos .proc
         * = EDITOR_FONT
 .binary "../data/font.prg", 2
 
- 
 
-.if false
+; TODO: Use proper DEBUG flag/define
+.if true
+
 ; Test images
-
 
 TEST_IMAGE1 = "hawkeye"
 

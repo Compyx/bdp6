@@ -75,7 +75,7 @@ show_buffer .proc
         ldx #$ff
         txs
         cld
-        jsr K_RESTOR
+        jsr kernal.k_restor_fixed
         jsr K_IOINIT
         jsr K_SCINIT
         lda #$36

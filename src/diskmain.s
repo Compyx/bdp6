@@ -480,7 +480,7 @@ exec .proc
         lda #$36
         sta $01
         cld
-        jsr K_RESTOR
+        jsr kernal.k_restor_fixed
         jsr K_IOINIT
         jsr K_SCINIT
         lda #0
