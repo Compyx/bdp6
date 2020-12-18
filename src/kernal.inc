@@ -2,6 +2,11 @@
 ;
 ; BDP 6 - KERNAL calls header
 
+
+; Signal this file has been included
+HAVE_KERNAL_INC = 1
+
+
 K_SCINIT = $ff81
 K_IOINIT = $ff84
 K_RAMTAS = $ff87

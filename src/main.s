@@ -5,7 +5,9 @@
 ; TODO: clean up IRQ code
 ;
 
-
+.weak
+  HAVE_KERNAL_INC = 0
+.endweak
         ; Global debug flag
         DEBUG = true
 

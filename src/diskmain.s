@@ -7,6 +7,7 @@
 ; The entire diskmenu and its data and constants live in the 'diskmenu' scope
 ;------------------------------------------------------------------------------
 
+
         ; Enable/disable some debugging code
         DISKMENU_DEBUG = false
 
@@ -19,6 +20,13 @@
 ;------------------------------------------------------------------------------
 ; KERNAL calls - not all of these are used, but let's declare 'em all anyway
 ;------------------------------------------------------------------------------
+
+; The declarations here come from the time I still considered having the disk
+; menu being a separate project for other gfx editors.
+;
+
+
+.if HAVE_KERNAL_INC != 0
         K_SCINIT = $ff81
         K_IOINIT = $ff84
         K_RAMTAS = $ff87
@@ -58,7 +66,7 @@
         K_SCREEN = $ffed
         K_PLOT   = $fff0
         K_IOBASE = $fff3
-
+.endif
 
 ;------------------------------------------------------------------------------
 ; Jumps into the diskmenu for easier access when using the diskmenu as a
